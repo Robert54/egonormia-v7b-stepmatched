@@ -4,4 +4,5 @@ outputs/
 results/
 *.log
 *.tmp
+.pytest_cache/
 .DS_Store

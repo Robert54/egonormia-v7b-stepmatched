@@ -1,8 +1,22 @@
 # Experiment Context
 
-This export keeps the single most important training run from the EgoNormia SFT series.
+This export keeps the main public-facing training and sweep scripts from the EgoNormia SFT series.
 
-## Mainline Run
+## Included Runs
+
+### v6
+
+- natural-language-output baseline
+- 5-task training mix
+- `epoch = 3`
+
+### v6b
+
+- natural-language output plus sensibility generation
+- 6-task training mix
+- `epoch = 3`
+
+### v7b-stepmatched
 
 - name: `v7b-stepmatched`
 - purpose: isolate the effect of removing generation tasks while keeping the glued CoT style
@@ -20,19 +34,23 @@ and CoT format, removes the generation tasks, and matches the v7 optimization bu
 
 ## Core Settings
 
-- dataset: `egonormia_llava_v7_cot_mcq3_train.json`
-- samples: `4890`
 - model: `nvidia/Cosmos-Reason2-2B`
-- epochs: `6`
-- steps per epoch: `76`
-- total steps: `456`
-- save frequency: `10`
-- max checkpoints kept: `50`
+- frames: `8`
+- batch per replica: `8`
+- mini batch: `4`
+- learning rate: `1e-5`
+
+Per-run specifics:
+- `v6`: `egonormia_llava_v6_train.json`, `epoch = 3`, `save_freq = 20`
+- `v6b`: `egonormia_llava_v6b_train.json`, `epoch = 3`, `save_freq = 20`
+- `v7b-stepmatched`: `egonormia_llava_v7_cot_mcq3_train.json`, `4890` samples, `epoch = 6`, `456` total steps, `save_freq = 10`
 
 ## Included Here
 
-- the portable launcher
-- the portable TOML template
+- portable launchers
+- portable TOML templates
+- a portable vLLM evaluator
+- a generic checkpoint sweep wrapper
 - dataset expectations
 
 Raw data, media, checkpoints, and the rest of the research tree are intentionally excluded.
